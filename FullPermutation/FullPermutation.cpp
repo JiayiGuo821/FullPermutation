@@ -156,6 +156,16 @@ int Intermediary2Rank(int intermediary, char method, char num)
 	return rank;
 }
 
+int Rank2Intermediary()
+{
+
+}
+
+int Intermediary2Permutation()
+{
+
+}
+
 bool check_permutation(int permutation, char num)
 {
 	int temp = int(num - '0');
@@ -174,6 +184,16 @@ bool check_permutation(int permutation, char num)
 		count += check.at(i);
 	}
 	return count == temp;
+}
+
+bool check_rank()
+{
+
+}
+
+bool check_intermediary()
+{
+
 }
 
 void main()
@@ -234,80 +254,43 @@ void main()
 		}
 	case '2':
 		{
-			/*int rank;
+			int rank;
 			cout << "输入一个序号:";
 			cin >> rank;
-			while (check_permutation(rank, num) == false)
+			while (check_rank(rank, num) == false)
 			{
 				cout << "无效输入，请重新输入：";
 				cin >> rank;
 			}
 
-			int rank, intermediary;
-			intermediary = Rank2Intermediary(Rank, method);
+			int permutation, intermediary;
+			intermediary = Rank2Intermediary(rank, method);
 			cout << "对应的中介数为：" << intermediary << endl;
-			rank = Intermediary2Permutation(intermediary, method, num);
-			cout << "对应的序号数为：" << permutation << endl;*/
+			permutation = Intermediary2Permutation(rank, method, num);
+			cout << "对应的排列为：" << permutation << endl;
 
 			break;
 		}
 	case '3':
 		{
 			int intermediary;
-			deque<int> intermediary_deq;
 			cin >> intermediary;
-			while (intermediary)
+			while (check_intermediary(intermediary, num) == false)
 			{
-				intermediary_deq.push_front(intermediary % 10);
-				intermediary = intermediary / 10;
+				cout << "无效输入，请重新输入：";
+				cin >> intermediary;
 			}
-			switch (method)
-			{
-			case '1':
-				{
 
-				}
-			case '2':
-				{
+			int permutation, rank;
+			rank = Intermediary2Rank(intermediary, method);
+			cout << "对应的序号数为：" << rank << endl;
+			permutation = Intermediary2Permutation(rank, method, num);
+			cout << "对应的序号数为：" << permutation << endl;
 
-				}
-			case '3':
-				{
-
-				}
-			case '4':
-				{
-
-				}
-			default:
-				break;
-			}
 			break;
 		}
 	default:
 		break;
 	}
 
-}
-
-
-int Dic_Permutation(int input)
-{
-	return 0;
-}
-
-int Inc_Permutation(int input)
-{
-	return 0;
-}
-
-int Dec_Permutation(int input)
-{
-
-	return 0;
-}
-
-int CR_Permutation(int input)
-{
-	return 0;
 }
