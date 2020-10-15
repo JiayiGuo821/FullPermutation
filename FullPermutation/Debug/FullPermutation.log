@@ -1,4 +1,4 @@
-﻿生成启动时间为 2020/10/10 22:28:51。
+﻿生成启动时间为 2020/10/15 23:56:07。
      1>项目“D:\Courses\组合数学\Project1\FullPermutation\FullPermutation\FullPermutation.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\app\matlab\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt FullPermutation.cpp
@@ -15,9 +15,26 @@
      1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(72): warning C4018: “<”: 有符号/无符号不匹配
      1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(97): warning C4018: “<”: 有符号/无符号不匹配
      1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(112): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(139): warning C4018: “<”: 有符号/无符号不匹配
-     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(149): warning C4018: “<”: 有符号/无符号不匹配
-     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(172): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(138): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(148): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(170): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(181): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(216): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(240): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(243): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(252): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(267): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(270): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(272): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(278): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(293): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(296): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(298): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(326): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(358): warning C4018: “<”: 有符号/无符号不匹配
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(361): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(363): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+     1>d:\courses\组合数学\project1\fullpermutation\fullpermutation\fullpermutation.cpp(387): warning C4018: “<”: 有符号/无符号不匹配
        Link:
          D:\app\matlab\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Courses\组合数学\Project1\FullPermutation\Debug\FullPermutation.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Courses\组合数学\Project1\FullPermutation\Debug\FullPermutation.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Courses\组合数学\Project1\FullPermutation\Debug\FullPermutation.lib" /MACHINE:X86 Debug\FullPermutation.obj
          FullPermutation.vcxproj -> D:\Courses\组合数学\Project1\FullPermutation\Debug\FullPermutation.exe
@@ -25,4 +42,4 @@
 
 生成成功。
 
-已用时间 00:00:00.59
+已用时间 00:00:00.74

@@ -132,7 +132,6 @@ int Intermediary2Rank(int intermediary, char method, char num)
 		intermediary = intermediary / 10;
 	}
 
-	deque<int> rank_deq;
 	if (method == '1' || method == '2')
 	{
 		int max_num = intermediary_deq.size() + 1;
@@ -156,14 +155,217 @@ int Intermediary2Rank(int intermediary, char method, char num)
 	return rank;
 }
 
-int Rank2Intermediary()
+int Rank2Intermediary(int rank, char method, char num)
 {
+	deque<int> rank_deq;
+	int intermediary = 0, i, temp;
 
+	if (method == '1' || method == '2')
+	{
+		i = 2;
+		while(rank)
+		{
+			temp = rank % i;
+			rank = rank / i;
+			intermediary += temp * pow(10, i - 2);
+			i++;
+		}
+	}
+	else
+	{
+		i = int(num - '0');
+		while (rank)
+		{
+			temp = rank % i;
+			rank = rank / i;
+			intermediary += temp * pow(10, int(num - '0') - i);
+			i--;
+		}
+
+	}
+	return intermediary;
 }
 
-int Intermediary2Permutation()
+int Intermediary2Permutation(int intermediary, char method, char num)
 {
-
+	deque<int> intermediary_deq;
+	int permutation = 0;
+	int length = int(num - '0') - 1;
+	
+	for (int i = 0; i < length; i++)
+	{
+		if (intermediary)
+		{
+			intermediary_deq.push_front(intermediary % 10);
+			intermediary = intermediary / 10;
+		}
+		else
+		{
+			intermediary_deq.push_front(0);
+		}
+	}
+	
+	deque<int> permutation_deq(length + 1, 0);
+	deque<int> count(length + 1, 0);
+	switch (method)
+	{
+	case '1':
+		{
+			int temp;
+			bool loop = true;
+			for (int i = 0; i < intermediary_deq.size(); i++)
+			{
+				temp = intermediary_deq.at(i) + 1;
+				for (int j = 0; j < i; j++)
+				{
+					if (permutation_deq.at(j) <= temp)
+					{
+						temp++;
+						loop = true;
+					}
+				}
+				while (loop)
+				{
+					loop = false;
+					for (int j = 0; j < i; j++)
+					{
+						if (permutation_deq.at(j) == temp)
+						{
+							temp++;
+							loop = true;
+						}
+					}
+				}
+				permutation_deq.at(i) = temp;
+				permutation += temp * pow(10, length - i);
+				count.at(temp - 1) = 1;
+			}
+			for (int t = 0; t < count.size(); t++)
+			{
+				if (count.at(t) == 0)
+					permutation += t + 1;
+			}
+			break;
+		}
+	case '2':
+		{
+			for (int i = 0; i < intermediary_deq.size(); i++)
+			{
+				int location = 0;
+				location = intermediary_deq.at(i);
+				for (int j = permutation_deq.size() - 1; j > -1; j--)
+				{
+					if (location == 0 && permutation_deq.at(j) == 0)
+					{
+						permutation_deq.at(j) = length + 1 - i;
+						break;
+					}
+					if (location != 0 && permutation_deq.at(j) == 0)
+						location--;
+				}
+			}
+			for (int j = 0; j < permutation_deq.size(); j++)
+			{
+				if (permutation_deq.at(j) == 0)
+					permutation += pow(10, length - j);
+				else
+					permutation += permutation_deq.at(j) * pow(10, length - j);
+			}
+			break;
+		}
+	case '3':
+		{
+			for (int i = 0; i < intermediary_deq.size(); i++)
+			{
+				int location = 0;
+				location = intermediary_deq.at(intermediary_deq.size() - 1 - i);
+				for (int j = permutation_deq.size() - 1; j > -1; j--)
+				{
+					if (location == 0 && permutation_deq.at(j) == 0)
+					{
+						permutation_deq.at(j) = length + 1 - i;
+						break;
+					}
+					if (location != 0 && permutation_deq.at(j) == 0)
+						location--;
+				}
+			}
+			for (int j = 0; j < permutation_deq.size(); j++)
+			{
+				if (permutation_deq.at(j) == 0)
+					permutation += pow(10, length - j);
+				else
+					permutation += permutation_deq.at(j) * pow(10, length - j);
+			}
+			break;
+		}
+	case '4':
+		{
+			deque<int> direction(permutation_deq.size() + 1, 0);//左0右1
+			for (int i = permutation_deq.size(); i > 2; i--)
+			{
+				if (i%2 == 1)
+				{
+					if (intermediary_deq.at(i - 3)%2 == 1)
+						direction.at(i) = 1;
+				}
+				else
+				{
+					if ((intermediary_deq.at(i - 3) + intermediary_deq.at(i - 4))%2 == 1)
+						direction.at(i) = 1;
+				}
+			}
+			int b = 0;
+			for (int i = permutation_deq.size(); i > 1; i--)
+			{
+				b = intermediary_deq.at(i - 2);
+				if (direction.at(i) == 1)
+				{
+					for (int j = 0; j < permutation_deq.size(); j++)
+					{
+						if (b == 0 && permutation_deq.at(j) == 0)
+						{
+							permutation_deq.at(j) = i;
+							break;
+						}
+						else
+						{
+							if (permutation_deq.at(j) == 0)
+								b--;
+						}
+					}
+				}
+				else
+				{
+					for (int j = permutation_deq.size() - 1; j > -1; j--)
+					{
+						if (b == 0 && permutation_deq.at(j) == 0)
+						{
+							permutation_deq.at(j) = i;
+							break;
+						}
+						else
+						{
+							if (permutation_deq.at(j) == 0)
+								b--;
+						}
+					}
+				}
+			}
+			for (int j = 0; j < permutation_deq.size(); j++)
+			{
+				if (permutation_deq.at(j) == 0)
+					permutation += pow(10, length - j);
+				else
+					permutation += permutation_deq.at(j) * pow(10, length - j);
+			}
+			break;
+		}
+	default:
+		break;
+	}
+	
+	return permutation;
 }
 
 bool check_permutation(int permutation, char num)
@@ -186,14 +388,22 @@ bool check_permutation(int permutation, char num)
 	return count == temp;
 }
 
-bool check_rank()
+bool check_rank(int rank, char num)
 {
-
+	int count = 1;
+	for (int i = 2; i <= int(num - '0'); i++)
+	{
+		count *= i;
+	}
+	if (rank < count)
+		return 1;
+	return 0;
 }
 
-bool check_intermediary()
+bool check_intermediary(int intermediary, char num, char method)
 {
-
+	int rank = Intermediary2Rank(intermediary, method, num);
+	return check_rank(rank, num);
 }
 
 void main()
@@ -264,9 +474,9 @@ void main()
 			}
 
 			int permutation, intermediary;
-			intermediary = Rank2Intermediary(rank, method);
+			intermediary = Rank2Intermediary(rank, method, num);
 			cout << "对应的中介数为：" << intermediary << endl;
-			permutation = Intermediary2Permutation(rank, method, num);
+			permutation = Intermediary2Permutation(intermediary, method, num);
 			cout << "对应的排列为：" << permutation << endl;
 
 			break;
@@ -274,18 +484,19 @@ void main()
 	case '3':
 		{
 			int intermediary;
+			cout << "输入一个中介数:";
 			cin >> intermediary;
-			while (check_intermediary(intermediary, num) == false)
+			while (check_intermediary(intermediary, num, method) == false)
 			{
 				cout << "无效输入，请重新输入：";
 				cin >> intermediary;
 			}
 
 			int permutation, rank;
-			rank = Intermediary2Rank(intermediary, method);
+			rank = Intermediary2Rank(intermediary, method, num);
 			cout << "对应的序号数为：" << rank << endl;
-			permutation = Intermediary2Permutation(rank, method, num);
-			cout << "对应的序号数为：" << permutation << endl;
+			permutation = Intermediary2Permutation(intermediary, method, num);
+			cout << "对应的排列数为：" << permutation << endl;
 
 			break;
 		}
