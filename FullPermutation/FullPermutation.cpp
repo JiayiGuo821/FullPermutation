@@ -3,6 +3,7 @@
 #include <deque>
 #include <cmath>
 #include <string.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -406,6 +407,132 @@ bool check_intermediary(int intermediary, char num, char method)
 	return check_rank(rank, num);
 }
 
+void symmetrical_permutation_generation(char num, char method, char decision) // our novel idea
+{
+	int length = int(num - '0');
+	deque<int> spg(length, 0);
+	deque<int> temp_deq(length - 2, 0); // record true n-2 nums
+	int count = 1, result, permutation, permutation_reserve;
+	for (int i = 2; i <= int(num - '0') - 2; i++)
+	{
+		count *= i;
+	}
+	DWORD star_time = GetTickCount();
+	for (int i = 0; i < length; i++)
+	{
+		spg.at(0) = i + 1;
+		for (int j = i + 1; j < length; j++)
+		{
+			spg.at(spg.size() - 1) = j + 1;
+			int mark = 0;
+			for (int t = 0; t < spg.size(); t++)
+			{
+				if (t == i || t == j)
+					continue;
+				temp_deq.at(mark) = t + 1;
+				//cout << temp_deq.at(mark) << endl;
+				mark++;
+			}
+			for(int t = 0; 1; t++)
+			{
+				if (t >= count)
+					break;
+				result = Intermediary2Permutation(Rank2Intermediary(t, method, num - 2), method, num - 2);
+				//cout << result <<endl;
+				for (int k = spg.size() - 2; k > 0; k--)
+				{
+					spg.at(k) = temp_deq.at((result % 10) - 1);
+					//cout << spg.at(k) << "  "<<k<<endl;
+					result = result / 10;
+				}
+				permutation = 0;
+				permutation_reserve = 0;
+				for (int t = 0; t < spg.size(); t++)
+				{
+					permutation += spg.at(t) * pow(10, spg.size() - t -1);
+					//cout << spg.at(t) << endl;
+					permutation_reserve += spg.at(t) * pow(10, t);
+				}
+				if (decision == '2')
+				{
+					cout << permutation << endl;
+					cout << permutation_reserve << endl;
+				}
+				//cout<<"***"<<endl;
+				//cout << permutation << endl;
+				//cout << permutation_reserve << endl;
+			}
+		}
+	}
+	DWORD end_time = GetTickCount();
+	cout << "全排列生成时间为：" << (end_time - star_time) << "ms" << endl;
+}
+
+void symmetrical_permutation_generation_memory(char num, char method, char decision) // our novel idea
+{
+	int length = int(num - '0');
+	deque<int> spg(length, 0);
+	deque<int> temp_deq(length - 2, 0); // record true n-2 nums
+	int count = 1, result, permutation, permutation_reserve;
+	for (int i = 2; i <= int(num - '0') - 2; i++)
+	{
+		count *= i;
+	}
+	DWORD star_time = GetTickCount();
+	deque<int> raw_result;
+	for(int t = 0; 1; t++)
+	{
+		if (t >= count)
+			break;
+		raw_result.push_back(Intermediary2Permutation(Rank2Intermediary(t, method, num - 2), method, num - 2));
+	}
+	for (int i = 0; i < length; i++)
+	{
+		spg.at(0) = i + 1;
+		for (int j = i + 1; j < length; j++)
+		{
+			spg.at(spg.size() - 1) = j + 1;
+			int mark = 0;
+			for (int t = 0; t < spg.size(); t++)
+			{
+				if (t == i || t == j)
+					continue;
+				temp_deq.at(mark) = t + 1;
+				//cout << temp_deq.at(mark) << endl;
+				mark++;
+			}
+			for(int t = 0; 1; t++)
+			{
+				if (t >= count)
+					break;
+				result = raw_result[t];
+				//cout << result <<endl;
+				for (int k = spg.size() - 2; k > 0; k--)
+				{
+					spg.at(k) = temp_deq.at((result % 10) - 1);
+					//cout << spg.at(k) << "  "<<k<<endl;
+					result = result / 10;
+				}
+				permutation = 0;
+				permutation_reserve = 0;
+				for (int t = 0; t < spg.size(); t++)
+				{
+					permutation += spg.at(t) * pow(10, spg.size() - t -1);
+					//cout << spg.at(t) << endl;
+					permutation_reserve += spg.at(t) * pow(10, t);
+				}
+				if (decision == '2')
+				{
+					cout << permutation << endl;
+					cout << permutation_reserve << endl;
+				}
+			}
+		}
+	}
+	DWORD end_time = GetTickCount();
+	cout << "全排列生成时间为：" << (end_time - star_time) << "ms" << endl;
+}
+
 void main()
 {
 	char num;
@@ -418,7 +545,7 @@ void main()
 	}
 
 	char method;
-	printf("%s","键入全排列方法：1.字典序法 2.递增进位制法 3.递减进位制法 4.邻域对换法：");
+	printf("%s","键入全排列方法：1.字典序法 2.递增进位制法 3.递减进位制法 4.邻域对换法（1-4）：");
 	cin >> method;
 	while (method < '1' || method > '4')
 	{
@@ -426,8 +553,91 @@ void main()
 		cin >> method;
 	}
 
+	char type;
+	printf("%s","键入测试内容：1.单一排列、序号数和中介数的转换 2.全排列生成时间开销 3.对称的全排列生成时间开销（1-3）：");
+	cin >> type;
+	while (type != '1' && type != '2' && type != '3')
+	{
+		cout << "无效输入，请重新输入：";
+		cin >> type;
+	}
+	if (type == '3' && num <= '3')
+	{
+		type = '2';
+		cout << "当前排列长度小于等于3，全排列将直接由标准全排列方法生成" << endl;
+	}
+
+	int count = 1, result;
+	for (int i = 2; i <= int(num - '0'); i++)
+	{
+		count *= i;
+	}
+
+	char decision;
+	if (type == '2' || type == '3')
+	{
+		printf("%s","是否打印全排列：1.仅测试算法时间 2.打印全排列并测试总时间（1-2）：");
+		cin >> decision;
+		while (decision != '1' && decision != '2')
+		{
+			cout << "无效输入，请重新输入：";
+			cin >> decision;
+		}
+	}
+
+	if (type == '2' && decision == '1')
+	{
+		DWORD star_time = GetTickCount();
+		for(int i = 0; 1; i++)
+		{
+			if (i >= count)
+				break;
+			result = Intermediary2Permutation(Rank2Intermediary(i, method, num), method, num);
+		}
+		DWORD end_time = GetTickCount();
+		cout << "全排列生成时间为：" << (end_time - star_time) << "ms" << endl;
+		return;
+	}
+	if (type == '2' && decision == '2')
+	{
+		DWORD star_time = GetTickCount();
+		for(int i = 0; 1; i++)
+		{
+			if (i >= count)
+				break;
+			cout << Intermediary2Permutation(Rank2Intermediary(i, method, num), method, num) << endl;
+		}
+		DWORD end_time = GetTickCount();
+		cout << "全排列生成时间为：" << (end_time - star_time) << "ms" << endl;
+		return;
+	}
+
+	char memory;
+	if (type == '3')
+	{
+		printf("%s","是否开辟内存来节省时间开销：1.是 2.否（1-2）：");
+		cin >> memory;
+		while (memory != '1' && memory != '2')
+		{
+			cout << "无效输入，请重新输入：";
+			cin >> memory;
+		}
+	}
+
+	if (type == '3' && memory == '1')
+	{
+		symmetrical_permutation_generation_memory(num, method, decision);
+		return;
+	}
+
+	if (type == '3' && memory == '2')
+	{
+		symmetrical_permutation_generation(num, method, decision);
+		return;
+	}
+
 	char option;
-	printf("%s","键入输入的内容：1.排列 2.序号数 3.中介数（1或2或3）：");
+	printf("%s","键入输入的内容：1.排列 2.序号 3.中介数（1-3）：");
 	cin >> option; 
 	while (option != '1' && option != '2' && option != '3')
 	{
@@ -435,12 +645,6 @@ void main()
 		cin >> option;
 	}	
 
-	int sup = 1;
-	for (int i = 0; i < num; i++)
-	{
-		sup = sup * (i + 1);
-	}
-	
 	switch(option)
 	{
 	case '1':
@@ -458,7 +662,7 @@ void main()
 			intermediary = Permutation2Intermediary(permutation, method);
 			cout << "对应的中介数为：" << intermediary << endl;
 			rank = Intermediary2Rank(intermediary, method, num);
-			cout << "对应的序号数为：" << rank << endl;
+			cout << "对应的序号为：" << rank << endl;
 
 			break;
 		}
@@ -494,14 +698,13 @@ void main()
 
 			int permutation, rank;
 			rank = Intermediary2Rank(intermediary, method, num);
-			cout << "对应的序号数为：" << rank << endl;
+			cout << "对应的序号为：" << rank << endl;
 			permutation = Intermediary2Permutation(intermediary, method, num);
-			cout << "对应的排列数为：" << permutation << endl;
+			cout << "对应的排列为：" << permutation << endl;
 
 			break;
 		}
 	default:
 		break;
 	}
-
 }
