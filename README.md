@@ -22,6 +22,7 @@
 无重排列的特点：序列总数一定为偶数（2k）。故对于任意一个排列，由于无重性，倒序输出该排列就可以得到另一个排列。
 
 思路：得到k个互不为倒序的排列，则倒序输出就可以得到另外k个排列，至少可以减少一半的时间开销，实际上本方法在不考虑内存开销的情况下还可以减少更多时间开销。
+![demo](https://github.com/JiayiGuo821/Markdown-Images/blob/master/FullPermutation/demo.png?raw=true)
 
 实现简述：
 
