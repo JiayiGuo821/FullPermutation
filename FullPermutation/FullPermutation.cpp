@@ -412,7 +412,7 @@ void symmetrical_permutation_generation(char num, char method, char decision) //
 	int length = int(num - '0');
 	deque<int> spg(length, 0);
 	deque<int> temp_deq(length - 2, 0); // record true n-2 nums
-	int count = 1, result, permutation, permutation_reserve;
+	int count = 1, result, permutation, permutation_reverse;
 	for (int i = 2; i <= int(num - '0') - 2; i++)
 	{
 		count *= i;
@@ -446,21 +446,18 @@ void symmetrical_permutation_generation(char num, char method, char decision) //
 					result = result / 10;
 				}
 				permutation = 0;
-				permutation_reserve = 0;
+				permutation_reverse = 0;
 				for (int t = 0; t < spg.size(); t++)
 				{
 					permutation += spg.at(t) * pow(10, spg.size() - t -1);
 					//cout << spg.at(t) << endl;
-					permutation_reserve += spg.at(t) * pow(10, t);
+					permutation_reverse += spg.at(t) * pow(10, t);
 				}
 				if (decision == '2')
 				{
-					cout << permutation << endl;
-					cout << permutation_reserve << endl;
+					printf("%d\n", permutation);
+					printf("%d\n", permutation_reverse);
 				}
-				//cout<<"***"<<endl;
-				//cout << permutation << endl;
-				//cout << permutation_reserve << endl;
 			}
 		}
 	}
@@ -473,7 +470,7 @@ void symmetrical_permutation_generation_memory(char num, char method, char decis
 	int length = int(num - '0');
 	deque<int> spg(length, 0);
 	deque<int> temp_deq(length - 2, 0); // record true n-2 nums
-	int count = 1, result, permutation, permutation_reserve;
+	int count = 1, result, permutation, permutation_reverse;
 	for (int i = 2; i <= int(num - '0') - 2; i++)
 	{
 		count *= i;
@@ -514,17 +511,16 @@ void symmetrical_permutation_generation_memory(char num, char method, char decis
 					result = result / 10;
 				}
 				permutation = 0;
-				permutation_reserve = 0;
+				permutation_reverse = 0;
 				for (int t = 0; t < spg.size(); t++)
 				{
 					permutation += spg.at(t) * pow(10, spg.size() - t -1);
-					//cout << spg.at(t) << endl;
-					permutation_reserve += spg.at(t) * pow(10, t);
+					permutation_reverse += spg.at(t) * pow(10, t);
 				}
 				if (decision == '2')
 				{
-					cout << permutation << endl;
-					cout << permutation_reserve << endl;
+					printf("%d\n",permutation);
+					printf("%d\n",permutation_reverse);
 				}
 			}
 		}
@@ -605,7 +601,7 @@ void main()
 		{
 			if (i >= count)
 				break;
-			cout << Intermediary2Permutation(Rank2Intermediary(i, method, num), method, num) << endl;
+			printf("%d\n",Intermediary2Permutation(Rank2Intermediary(i, method, num), method, num));
 		}
 		DWORD end_time = GetTickCount();
 		cout << "全排列生成时间为：" << (end_time - star_time) << "ms" << endl;
